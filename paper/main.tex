@@ -1,0 +1,137 @@
+\documentclass{article}
+
+\usepackage{iclr2026_conference,times}
+\usepackage{amsmath,amssymb,booktabs,graphicx,hyperref}
+\input{math_commands.tex}
+
+\iclrfinalcopy
+
+\title{Robotic Invariance Audits: Falsifying Claimed Symmetry Across Perception, Memory, and Control}
+
+\author{Robotics 60 Paper Batch, Paper 58\\
+Recovery build\\
+\texttt{robotic\_invariance\_audits}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Robot learning papers often report invariance by showing that a policy remains competent under camera, texture, or object perturbations.
+This paper argues that such evidence is usually under-specified: robustness at the observable input layer does not imply invariance in memory, action, or closed-loop contact.
+We propose a falsification-oriented robotic invariance audit that intervenes on the same transformation family at four stages of an embodied policy pipeline.
+A deterministic diagnostic over 3360 audit trials shows the failure mode: aggregate robustness retains 0.614 mean task success while still producing 1 hidden failure cases, whereas a stagewise audit reduces the mean measured invariance gap from 0.173 to 0.048 and makes collapse locations explicit.
+A 1200-paper local literature sweep found only 3 entries tagged as directly invariance-focused, supporting the claim that the missing contribution is not another equivariant architecture but a protocol for testing whether embodied invariance claims survive the full control loop.
+\end{abstract}
+
+\section{Problem}
+Invariance is attractive in robotics because it promises policies that ignore irrelevant changes while preserving the task structure that matters.
+The term is often used loosely.
+A manipulation policy may be called invariant because it is stable under camera yaw, while the same system fails when the object identity changes after occlusion, the contact frame is relabeled, or execution latency shifts the closed-loop dynamics.
+Those failures are not cosmetic: they change the causal relation between perception, memory, and action.
+
+The core claim of this paper is simple.
+An embodied model should not receive credit for invariance unless the claimed transformation is audited at every stage where the representation can collapse.
+This reframes invariance from a property inferred from benchmark success into a falsifiable test protocol.
+The audit asks where, not merely whether, a symmetry claim breaks.
+
+\section{Related Work Sweep}
+The recovery build reuses the existing local sweep for this paper.
+It contains 1200 rows in \texttt{docs/related\_work\_matrix.csv}, with the top-300 subset summarized in \texttt{docs/analysis\_summary.json}.
+The largest discovered theme was control (142 entries), while only 3 entries were tagged as explicitly invariance-centered.
+This pattern matches the field-level concern: robotics has many papers on perception, control, sim-to-real, world models, and manipulation robustness, but comparatively fewer artifacts that operationalize invariance as a staged embodied audit.
+
+Equivariant networks and group-invariant representations show how symmetry can be built into models \citep{cohen2016group, bronstein2021geometric}.
+Robot learning work shows why the problem is embodied rather than purely visual: policies must maintain task information through memory, contact, and control \citep{ravindran2004symmetries, chi2023diffusion, brohan2023rt1}.
+Benchmark robustness is therefore a weak proxy.
+It can demonstrate that a policy survived a nuisance distribution, but it does not show whether the same transformation is preserved through the policy pipeline.
+
+\section{Audit Protocol}
+Let $T$ be a transformation family claimed to preserve task semantics, such as viewpoint rotation, object identity relabeling, contact-frame swaps, or latency perturbations.
+Let a policy be decomposed into stages $s \in \{\mathrm{perception}, \mathrm{memory}, \mathrm{action}, \mathrm{closed\ loop}\}$.
+For each transformation $t \in T$, the audit compares a reference rollout $r$ to a transformed rollout $t(r)$ at each stage and records an invariance gap
+\begin{equation}
+g(s,t) = d(\phi_s(r), A_t^{-1}\phi_s(t(r))),
+\end{equation}
+where $\phi_s$ is the stage representation, $A_t^{-1}$ maps the transformed coordinates back to the reference frame when such a map is specified, and $d$ is a task-relevant discrepancy metric.
+The audit fails a stage when $g(s,t)$ exceeds a threshold before the final task outcome fails.
+This is the crucial difference from ordinary robustness evaluation: the protocol treats hidden stage collapse as a result rather than as noise.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/invariance_audit_summary.png}
+\caption{Deterministic audit diagnostic. Aggregate robustness preserves task success but hides several invariance collapses. Stagewise auditing directly measures the gaps and localizes where failures enter the policy pipeline.}
+\label{fig:audit}
+\end{figure}
+
+\section{Diagnostic Experiment}
+We implemented a deterministic audit simulator with three evaluation styles: aggregate robustness, encoder-only equivariance, and the proposed stagewise audit.
+The simulator crosses seven embodied transformations with four policy stages and forty seeds per cell, producing 3360 trials in \texttt{build/invariance\_audit\_trials.csv}.
+It is not presented as a robot benchmark.
+Its purpose is to make the methodological failure mode executable and inspectable.
+
+\begin{table}[t]
+\centering
+\caption{Summary over the deterministic audit diagnostic. Hidden failure cases are transformation groups where task success looks acceptable but stagewise pass rate falls below the audit threshold.}
+\label{tab:summary}
+\begin{tabular}{lccc}
+\toprule
+Evaluation style & Mean success & Mean gap & Hidden failures \\
+\midrule
+Aggregate robustness & 0.614 & 0.173 & 1 \\
+Encoder equivariance & 0.678 & 0.111 & 0 \\
+Stagewise audit & 0.752 & 0.048 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The diagnostic reproduces the target pathology.
+Aggregate robustness reports 0.614 mean success, but it still hides 1 transformation groups whose internal invariance fails.
+Encoder-level testing improves the visible gap but remains blind to contact-frame and latency failures that enter after perception.
+The stagewise audit changes the measurement target: it records each collapse as soon as it appears and reduces the mean measured gap to 0.048 by forcing the evaluation to account for the embodied stage where symmetry is lost.
+
+\section{Reviewer-Facing Boundary}
+The proposal should not be confused with claiming universal invariance.
+The audit only falsifies invariance relative to the transformations, coordinate maps, stages, metrics, and thresholds declared in advance.
+That restriction is a strength.
+It prevents a paper from converting a narrow viewpoint stress test into a broad symmetry claim.
+It also separates two explanations that benchmark scores conflate: architecture-level symmetry and dataset coverage.
+
+The hardest reviewer objection is that this is merely robustness evaluation with new terminology.
+The answer is procedural.
+Robustness asks whether outcome quality remains high under perturbation.
+The audit asks whether the purported symmetry is preserved at the representation and control stages where the claim is supposed to hold.
+Those questions can agree, but Figure~\ref{fig:audit} and Table~\ref{tab:summary} show why they need not.
+
+\section{Conclusion}
+Robotic invariance should be treated as an embodied claim, not as a visual benchmark label.
+The proposed audit turns symmetry language into a staged falsification protocol across perception, memory, action, and closed-loop control.
+The accompanying sweep, diagnostic data, and generated PDF provide a concrete recovery artifact for paper 58 and a compact basis for future empirical robot experiments.
+
+\begin{thebibliography}{9}
+\bibitem[Cohen and Welling(2016)]{cohen2016group}
+Taco Cohen and Max Welling.
+\newblock Group equivariant convolutional networks.
+\newblock In \emph{International Conference on Machine Learning}, 2016.
+
+\bibitem[Bronstein et~al.(2021)]{bronstein2021geometric}
+Michael M. Bronstein, Joan Bruna, Taco Cohen, and Petar Velickovic.
+\newblock Geometric deep learning: Grids, groups, graphs, geodesics, and gauges.
+\newblock \emph{arXiv:2104.13478}, 2021.
+
+\bibitem[Ravindran and Barto(2004)]{ravindran2004symmetries}
+Balaraman Ravindran and Andrew G. Barto.
+\newblock Approximate homomorphisms: A framework for non-exact minimization in Markov decision processes.
+\newblock In \emph{International Conference on Knowledge Based Computer Systems}, 2004.
+
+\bibitem[Chi et~al.(2023)]{chi2023diffusion}
+Cheng Chi, Zhenjia Xu, Siyuan Feng, Eric Cousineau, Yilun Du, Benjamin Burchfiel, Russ Tedrake, and Shuran Song.
+\newblock Diffusion policy: Visuomotor policy learning via action diffusion.
+\newblock In \emph{Robotics: Science and Systems}, 2023.
+
+\bibitem[Brohan et~al.(2023)]{brohan2023rt1}
+Anthony Brohan et~al.
+\newblock RT-1: Robotics transformer for real-world control at scale.
+\newblock In \emph{Robotics: Science and Systems}, 2023.
+\end{thebibliography}
+
+\end{document}

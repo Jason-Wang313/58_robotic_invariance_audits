@@ -1,0 +1,13 @@
+method,stage,mean_invariance_gap,collapse_rate
+aggregate_robustness,action,0.198,0.868
+aggregate_robustness,closed_loop,0.198,0.882
+aggregate_robustness,latent_memory,0.147,0.696
+aggregate_robustness,perception,0.149,0.686
+encoder_equivariance,action,0.112,0.500
+encoder_equivariance,closed_loop,0.110,0.468
+encoder_equivariance,latent_memory,0.110,0.464
+encoder_equivariance,perception,0.110,0.468
+stagewise_audit,action,0.031,0.007
+stagewise_audit,closed_loop,0.028,0.000
+stagewise_audit,latent_memory,0.067,0.146
+stagewise_audit,perception,0.066,0.139
