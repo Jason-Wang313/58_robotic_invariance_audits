@@ -1,0 +1,23 @@
+{
+  "paper": 58,
+  "slug": "robotic_invariance_audits",
+  "status": "terminal",
+  "decision": "workshop-only",
+  "hardening_version": "v2",
+  "canonical_pdf": "C:/Users/wangz/Downloads/58.pdf",
+  "canonical_pdf_bytes": 192975,
+  "built_at": "2026-06-13 13:59:52 +01:00",
+  "main_blocker": "Deterministic synthetic audit only; v2 same-policy control shows the audit localizes failures but does not improve policy success.",
+  "v2_evidence": {
+    "same_policy_mean_success": 0.6144508035714293,
+    "same_policy_mean_gap": 0.17318321428571434,
+    "gap_threshold": 0.12,
+    "collapsed_stage_cells": 23,
+    "total_stage_cells": 28,
+    "hidden_outcome_passing_transforms": [
+      "camera_yaw",
+      "lighting_texture"
+    ],
+    "action_or_closed_loop_collapses": 13
+  }
+}

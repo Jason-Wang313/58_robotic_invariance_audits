@@ -1,0 +1,6 @@
+gap_threshold,collapsed_stage_cells,hidden_outcome_passing_transforms,hidden_transform_names,action_or_closed_loop_collapses,perception_or_memory_collapses
+0.08,24,2,camera_yaw;lighting_texture,14,10
+0.1,24,2,camera_yaw;lighting_texture,14,10
+0.12,23,2,camera_yaw;lighting_texture,13,10
+0.16,17,0,none,10,7
+0.2,12,0,none,10,2

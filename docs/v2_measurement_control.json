@@ -1,0 +1,54 @@
+{
+  "base_method": "aggregate_robustness",
+  "outcome_success_threshold": 0.68,
+  "method_success_control": {
+    "same_policy_mean_success": 0.6144508035714293,
+    "same_policy_mean_gap": 0.17318321428571434,
+    "generated_stagewise_condition_mean_success": 0.7519926785714285,
+    "generated_stagewise_condition_mean_gap": 0.04795830357142861,
+    "audit_itself_success_delta_under_same_policy": 0.0
+  },
+  "threshold_rows": [
+    {
+      "gap_threshold": 0.08,
+      "collapsed_stage_cells": 24,
+      "hidden_outcome_passing_transforms": 2,
+      "hidden_transform_names": "camera_yaw;lighting_texture",
+      "action_or_closed_loop_collapses": 14,
+      "perception_or_memory_collapses": 10
+    },
+    {
+      "gap_threshold": 0.1,
+      "collapsed_stage_cells": 24,
+      "hidden_outcome_passing_transforms": 2,
+      "hidden_transform_names": "camera_yaw;lighting_texture",
+      "action_or_closed_loop_collapses": 14,
+      "perception_or_memory_collapses": 10
+    },
+    {
+      "gap_threshold": 0.12,
+      "collapsed_stage_cells": 23,
+      "hidden_outcome_passing_transforms": 2,
+      "hidden_transform_names": "camera_yaw;lighting_texture",
+      "action_or_closed_loop_collapses": 13,
+      "perception_or_memory_collapses": 10
+    },
+    {
+      "gap_threshold": 0.16,
+      "collapsed_stage_cells": 17,
+      "hidden_outcome_passing_transforms": 0,
+      "hidden_transform_names": "none",
+      "action_or_closed_loop_collapses": 10,
+      "perception_or_memory_collapses": 7
+    },
+    {
+      "gap_threshold": 0.2,
+      "collapsed_stage_cells": 12,
+      "hidden_outcome_passing_transforms": 0,
+      "hidden_transform_names": "none",
+      "action_or_closed_loop_collapses": 10,
+      "perception_or_memory_collapses": 2
+    }
+  ],
+  "interpretation": "The v2 control treats the audit as an observer on the same aggregate-robustness policy. It can expose hidden transform-stage collapses, but it does not improve policy success."
+}

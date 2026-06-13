@@ -1,22 +1,24 @@
 # Final Audit
 
-Status: recovered_success
-
 Paper: 58 robotic_invariance_audits
 
-Recovered outputs:
+Status: terminal
 
-- `paper/main.pdf`
-- `paper/main.tex`
-- `paper/figures/invariance_audit_summary.png`
-- `docs/invariance_audit_trials.csv`
-- `docs/invariance_audit_results.csv`
-- `docs/stage_collapse_matrix.csv`
-- `docs/audit_diagnostics.json`
+Decision: workshop-only
 
-Checks:
+## Main reason
 
-- Literature context reused from the existing sweep: 1200 rows.
-- Theme counts reused from `docs/analysis_summary.json`: {"control": 142, "general": 85, "invariance": 3, "sensing": 36, "sim2real": 23, "world_models": 11}.
-- Deterministic diagnostic trials: 3360.
-- Main claim boundary: the audit falsifies declared invariance claims over specified transformation families, stages, metrics, and thresholds. It does not claim universal invariance.
+The falsification protocol is a useful workshop idea, but the evidence is a deterministic synthetic diagnostic rather than a robot benchmark. The original recovery manuscript also risked implying that a stagewise audit improves policy success. V2 hardening fixes that by adding a same-policy measurement control: the audit localizes hidden invariance collapses but does not repair the policy.
+
+## V2 evidence
+
+- Same-policy aggregate-robustness success remains 0.614.
+- Same-policy aggregate-robustness mean gap remains 0.173.
+- At gap threshold 0.12, 23 of 28 transform-stage cells collapse.
+- At gap threshold 0.12, 13 collapsed cells occur at the action or closed-loop stages.
+- Two transformations, `camera_yaw` and `lighting_texture`, pass the outcome threshold while hiding collapsed stage cells.
+- At gap thresholds 0.16 and 0.20, hidden outcome-passing transformations fall to zero, showing threshold sensitivity.
+
+## Boundary
+
+The paper may claim that declared invariance should be audited at perception, memory, action, and closed-loop stages. It may not claim hardware validation, universal invariance detection, architecture superiority, or policy improvement from the audit itself.
