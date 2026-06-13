@@ -5,21 +5,28 @@
 \input{math_commands.tex}
 
 \iclrfinalcopy
+\raggedbottom
 
-\title{Robotic Invariance Audits: Falsifying Claimed Symmetry Across Perception, Memory, and Control}
+\title{Robotic Invariance Audits}
 
 \author{Robotics 60 Paper Batch, Paper 58\\
-Recovery build\\
+Submission-hardening v2\\
 \texttt{robotic\_invariance\_audits}}
 
 \begin{document}
 \maketitle
 
+\noindent\textbf{Submission-hardening note.}
+This v2 manuscript is marked \textbf{workshop-only}.
+The contribution is a falsification and reporting protocol, not a claim that the audit itself improves a robot policy or proves embodied invariance.
+
 \begin{abstract}
 Robot learning papers often report invariance by showing that a policy remains competent under camera, texture, or object perturbations.
 This paper argues that such evidence is usually under-specified: robustness at the observable input layer does not imply invariance in memory, action, or closed-loop contact.
 We propose a falsification-oriented robotic invariance audit that intervenes on the same transformation family at four stages of an embodied policy pipeline.
-A deterministic diagnostic over 3360 audit trials shows the failure mode: aggregate robustness retains 0.614 mean task success while still producing 1 hidden failure cases, whereas a stagewise audit reduces the mean measured invariance gap from 0.173 to 0.048 and makes collapse locations explicit.
+A deterministic diagnostic over 3360 audit trials shows the failure mode, but v2 hardening separates measurement from intervention.
+In the original generated conditions, aggregate robustness retained 0.614 mean task success and an instrumented stagewise condition reported a lower 0.048 mean gap.
+Under a same-policy measurement control, however, the audit does not improve success: the underlying policy remains at 0.614 mean success while the observer exposes 23 of 28 collapsed transform-stage cells at a 0.12 gap threshold, including two transformations that still pass an outcome threshold.
 A 1200-paper local literature sweep found only 3 entries tagged as directly invariance-focused, supporting the claim that the missing contribution is not another equivariant architecture but a protocol for testing whether embodied invariance claims survive the full control loop.
 \end{abstract}
 
@@ -35,8 +42,8 @@ This reframes invariance from a property inferred from benchmark success into a 
 The audit asks where, not merely whether, a symmetry claim breaks.
 
 \section{Related Work Sweep}
-The recovery build reuses the existing local sweep for this paper.
-It contains 1200 rows in \texttt{docs/related\_work\_matrix.csv}, with the top-300 subset summarized in \texttt{docs/analysis\_summary.json}.
+The v2 build reuses a 1200-row local sweep for this paper.
+The top-300 subset is summarized in the repository's analysis summary.
 The largest discovered theme was control (142 entries), while only 3 entries were tagged as explicitly invariance-centered.
 This pattern matches the field-level concern: robotics has many papers on perception, control, sim-to-real, world models, and manipulation robustness, but comparatively fewer artifacts that operationalize invariance as a staged embodied audit.
 
@@ -87,7 +94,23 @@ Stagewise audit & 0.752 & 0.048 & 0 \\
 The diagnostic reproduces the target pathology.
 Aggregate robustness reports 0.614 mean success, but it still hides 1 transformation groups whose internal invariance fails.
 Encoder-level testing improves the visible gap but remains blind to contact-frame and latency failures that enter after perception.
-The stagewise audit changes the measurement target: it records each collapse as soon as it appears and reduces the mean measured gap to 0.048 by forcing the evaluation to account for the embodied stage where symmetry is lost.
+The first table should not be read as evidence that the audit improves a robot.
+It compares generated evaluation conditions, one of which is instrumented to preserve stage information.
+The defensible claim is localization: when the same underlying policy is held fixed, a stagewise observer can expose where invariance collapses while leaving the policy's success unchanged.
+
+\begin{table}[t]
+\centering
+\small
+\input{v2_measurement_control_table.tex}
+\caption{V2 same-policy measurement control on the aggregate-robustness trials. The audit is treated as an observer, not an intervention. Hidden transformations are outcome-passing transformations with at least one collapsed transform-stage cell.}
+\label{tab:v2-control}
+\end{table}
+
+Table~\ref{tab:v2-control} is the hostile control that narrows the paper.
+At the default 0.12 gap threshold, 23 of 28 transform-stage cells collapse in the same aggregate-robustness policy, and 13 of those collapses occur at the action or closed-loop stages.
+Camera yaw and lighting/texture still pass the outcome threshold while hiding collapsed stage cells.
+Relaxing the gap threshold to 0.16 or 0.20 removes the outcome-passing hidden-transform count, but action and closed-loop collapses remain visible.
+The audit therefore detects and localizes failures; it does not repair the system, and its thresholds must be declared in advance.
 
 \section{Reviewer-Facing Boundary}
 The proposal should not be confused with claiming universal invariance.
@@ -95,6 +118,8 @@ The audit only falsifies invariance relative to the transformations, coordinate 
 That restriction is a strength.
 It prevents a paper from converting a narrow viewpoint stress test into a broad symmetry claim.
 It also separates two explanations that benchmark scores conflate: architecture-level symmetry and dataset coverage.
+The v2 measurement-control stress adds a second boundary: success deltas across generated conditions cannot be claimed as an audit benefit.
+Only same-policy detection and localization are supported.
 
 The hardest reviewer objection is that this is merely robustness evaluation with new terminology.
 The answer is procedural.
@@ -105,7 +130,7 @@ Those questions can agree, but Figure~\ref{fig:audit} and Table~\ref{tab:summary
 \section{Conclusion}
 Robotic invariance should be treated as an embodied claim, not as a visual benchmark label.
 The proposed audit turns symmetry language into a staged falsification protocol across perception, memory, action, and closed-loop control.
-The accompanying sweep, diagnostic data, and generated PDF provide a concrete recovery artifact for paper 58 and a compact basis for future empirical robot experiments.
+The accompanying sweep, diagnostic data, and v2 measurement control provide a workshop-level basis for future empirical robot experiments, not a submission-ready robot benchmark.
 
 \begin{thebibliography}{9}
 \bibitem[Cohen and Welling(2016)]{cohen2016group}

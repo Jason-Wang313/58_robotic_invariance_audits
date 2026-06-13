@@ -1,7 +1,15 @@
 # Claims
 
-1. Many robot papers conflate robustness under nuisance shifts with true invariance under embodied transformations.
-2. The strongest novelty is an audit protocol that probes invariance at multiple pipeline stages.
-3. Viewpoint-only tests are insufficient because contact, kinematics, and execution-time perturbations can destroy invariance after the encoder.
-4. A falsification-oriented audit can reveal that some reported symmetry preservation is architectural, while some is merely dataset coverage.
-5. The paper should avoid claiming universal proofs unless the test suite explicitly spans the relevant transformation family.
+## Supported
+
+1. Outcome robustness is not enough to certify an embodied invariance claim.
+2. A stagewise observer can localize where a declared transformation breaks across perception, memory, action, and closed-loop control.
+3. In the deterministic diagnostic, the same aggregate-robustness policy keeps 0.614 mean success while a 0.12-gap observer exposes 23/28 collapsed transform-stage cells.
+4. Thresholds and coordinate maps must be declared before turning audit results into claims.
+
+## Removed or narrowed
+
+1. The audit does not improve policy success.
+2. The synthetic diagnostic is not a hardware or learned-policy benchmark.
+3. The literature sweep supports motivation only; it is not a comprehensive novelty proof.
+4. The protocol falsifies declared invariance only for the specified transformations, stages, metrics, and thresholds.
