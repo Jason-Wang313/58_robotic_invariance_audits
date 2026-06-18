@@ -1,0 +1,58 @@
+{
+  "task": {
+    "t00": "tabletop manipulation",
+    "t01": "drawer cabinet interaction",
+    "t02": "cable routing",
+    "t03": "tool-use alignment",
+    "t04": "bimanual handover",
+    "t05": "mobile manipulation",
+    "t06": "legged navigation",
+    "t07": "contact-rich insertion"
+  },
+  "transform": {
+    "x00": "camera yaw",
+    "x01": "camera height",
+    "x02": "lighting texture",
+    "x03": "object identity relabel",
+    "x04": "contact frame swap",
+    "x05": "gripper compliance change",
+    "x06": "latency shift",
+    "x07": "dynamics friction shift",
+    "x08": "morphology retargeting"
+  },
+  "policy": {
+    "aggregate_robust": "Aggregate robust policy",
+    "encoder_equivariant": "Encoder equivariant policy",
+    "data_augmented": "Data-augmented robust policy",
+    "memory_consistent": "Memory-consistent policy",
+    "action_frame_calibrated": "Action-frame calibrated policy",
+    "closed_loop_invariant": "Closed-loop invariant policy",
+    "oracle_staged_invariant": "Oracle staged invariant policy"
+  },
+  "stage": {
+    "s00": "perception",
+    "s01": "latent memory",
+    "s02": "action parameterization",
+    "s03": "contact interface",
+    "s04": "closed loop rollout"
+  },
+  "threshold": {
+    "q00": "0.08",
+    "q01": "0.10",
+    "q02": "0.12",
+    "q03": "0.16",
+    "q04": "0.20"
+  },
+  "severity": {
+    "v00": "mild",
+    "v01": "moderate",
+    "v02": "severe",
+    "v03": "adversarial"
+  },
+  "observability": {
+    "o00": "outcome only",
+    "o01": "encoder logs",
+    "o02": "action logs",
+    "o03": "full stage logs"
+  }
+}

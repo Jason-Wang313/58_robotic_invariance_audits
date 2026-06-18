@@ -3,19 +3,21 @@
 ## In scope
 
 - Declared transformation families.
-- Stagewise observer measurements across perception, latent memory, action, and closed-loop rollout.
-- Gap thresholds and outcome thresholds specified in advance.
-- Hidden-failure reporting when outcomes pass but internal stage cells collapse.
+- Stagewise observer measurements across perception, latent memory, action parameterization, contact interface, and closed-loop rollout.
+- Gap thresholds and outcome thresholds specified before interpretation.
+- Hidden-failure and false-pass reporting when outcomes pass but internal stage cells collapse.
+- Policy-family comparisons that separate architecture/stage design from audit observability.
+- RAM-light deterministic benchmark generation and online aggregation.
 
 ## Out of scope
 
 - Claims that the audit improves a robot policy.
 - Claims of universal invariance testing.
 - Hardware validation.
-- Learned-model superiority.
+- Real-world safety certification.
 - Exhaustive literature coverage.
 - Automatic discovery of the correct transformation family or coordinate map.
 
-## V2 hostile boundary
+## Final boundary
 
-The original recovery artifact risked conflating an instrumented generated condition with an intervention. The v2 control fixes this by holding the policy fixed. Under that control, success remains 0.614, while the audit reports hidden collapses and threshold sensitivity.
+The full-scale result supports a final deterministic benchmark and reporting-discipline claim. It does not claim deployed robot safety or universal invariance proof.

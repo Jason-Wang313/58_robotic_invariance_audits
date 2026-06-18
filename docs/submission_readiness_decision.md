@@ -1,5 +1,5 @@
 # Submission Readiness Decision
 
-Decision: workshop-only.
+Decision: final_v3_full_scale_submission_candidate.
 
-Rationale: the v2 paper is honest and reproducible, but the evidence is still synthetic and measurement-only. It can support a workshop discussion about auditing embodied invariance claims. It cannot support a main-conference claim about policy improvement, universal invariance certification, or real robot robustness.
+Rationale: the paper now has a full-scale deterministic observer benchmark, broad policy and stress-test coverage, an observer-only validation invariant, a 25-page final manuscript, a gated final export, and rendered visual QA. The remaining limitations are explicit: no hardware validation, no universal invariance certificate, and no claim that the audit improves policy success.
