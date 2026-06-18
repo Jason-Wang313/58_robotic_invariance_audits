@@ -2,16 +2,20 @@
 
 ## Attack 1: The audit is just robustness evaluation.
 
-Outcome: Partially survives only after narrowing. The paper now distinguishes outcome success from stagewise invariance gaps and requires declared transformation maps, stages, metrics, and thresholds.
+Outcome: survives. The final manuscript distinguishes outcome success from staged invariance gaps and false passes.
 
 ## Attack 2: The diagnostic claims the audit improves the policy.
 
-Outcome: Original framing failed. V2 added a same-policy measurement control. Under that control, success remains 0.614 and the audit only exposes hidden collapses.
+Outcome: survives. The v3 benchmark validates zero audit-induced success delta across 201,600 rows.
 
 ## Attack 3: Hidden failures depend on thresholds.
 
-Outcome: Survives as a limitation. At thresholds 0.16 and 0.20, hidden outcome-passing transforms fall to zero, while action and closed-loop collapses remain visible.
+Outcome: survives with sensitivity. Five thresholds are reported, and the paper does not rely on a single cutoff.
 
 ## Attack 4: No real robot evidence.
 
-Outcome: Fails main-conference readiness. The decision is workshop-only.
+Outcome: limitation, not fatal to the current claim. The decision is final deterministic submission candidate, not hardware safety proof.
+
+## Attack 5: The paper is too short or under-scoped.
+
+Outcome: resolved. The final manuscript is 25 pages and adds full-scale policy, transform, stage, threshold, severity, observability, task, failure-case, reproducibility, and reviewer-checklist content.

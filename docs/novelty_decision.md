@@ -1,7 +1,16 @@
 # Novelty Decision
 
-Decision: workshop-only.
+Decision: final_v3_full_scale_submission_candidate.
 
-The strongest remaining contribution is not a new equivariant architecture and not a benchmark result. It is a falsification protocol: if a robot paper claims invariance under an embodied transformation, the paper should declare the coordinate map, stages, metrics, and thresholds, then test the same transformation across the full policy pipeline.
+The contribution is not a new equivariant architecture. It is a staged observer-only audit protocol plus a deterministic full-scale benchmark for falsifying embodied invariance claims.
 
-V2 hardening narrows the novelty boundary. The stagewise audit can expose hidden collapses on a fixed policy, but it cannot be credited with improving that policy. The work is suitable as a workshop position or audit-note seed, not as a main-conference empirical result.
+The novelty is the combination of:
+
+- declared transformation families,
+- stagewise gap measurement across perception, memory, action, contact, and closed-loop rollout,
+- observer-only validation with zero success delta,
+- broad policy-family comparison,
+- threshold, severity, transform, stage, task, and observability stress slices,
+- explicit false-pass and localization reporting.
+
+The v2 same-policy measurement control is preserved as a boundary. The v3 benchmark provides the scale and scope needed for a final deterministic submission candidate.

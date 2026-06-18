@@ -4,21 +4,35 @@ Paper: 58 robotic_invariance_audits
 
 Status: terminal
 
-Decision: workshop-only
+Decision: final_v3_full_scale_submission_candidate
 
-## Main reason
+## Main result
 
-The falsification protocol is a useful workshop idea, but the evidence is a deterministic synthetic diagnostic rather than a robot benchmark. The original recovery manuscript also risked implying that a stagewise audit improves policy success. V2 hardening fixes that by adding a same-policy measurement control: the audit localizes hidden invariance collapses but does not repair the policy.
+Paper58 is now a final v3 full-scale submission candidate. The core claim is that staged observer-only audits expose and localize hidden robotic invariance failures that aggregate outcome robustness can miss. The audit does not repair the policy or change task success.
 
-## V2 evidence
+## Full-scale evidence
 
-- Same-policy aggregate-robustness success remains 0.614.
-- Same-policy aggregate-robustness mean gap remains 0.173.
-- At gap threshold 0.12, 23 of 28 transform-stage cells collapse.
-- At gap threshold 0.12, 13 collapsed cells occur at the action or closed-loop stages.
-- Two transformations, `camera_yaw` and `lighting_texture`, pass the outcome threshold while hiding collapsed stage cells.
-- At gap thresholds 0.16 and 0.20, hidden outcome-passing transformations fall to zero, showing threshold sensitivity.
+- Compact condition rows: 201,600
+- Represented evaluations: 105,696,460,800
+- Represented planning-tick decisions: 6,764,573,491,200
+- Max absolute audit-induced success delta: 0.0
+- Best non-oracle policy: closed-loop invariant policy, utility 0.665
+- Oracle staged invariant policy: utility 0.849
+- Aggregate robust policy: success 0.610, stage collapse 0.992, utility 0.606
+- Outcome-only false pass: 0.176
+- Full-stage-log false pass: 0.024
+
+## Final artifact
+
+- Canonical PDF: `C:/Users/wangz/Downloads/58.pdf`
+- Pages: 25
+- Bytes: 360,580
+- SHA256: `3F4945B84202530A3EA82E1153C4EDBA464AACD011A919E849F094E8A683266A`
+- Local PDF removed: yes
+- Visual QA: passed on rendered pages 1, 5, 6, 7, 8, 9, 17, 21, 24, and 25
 
 ## Boundary
 
-The paper may claim that declared invariance should be audited at perception, memory, action, and closed-loop stages. It may not claim hardware validation, universal invariance detection, architecture superiority, or policy improvement from the audit itself.
+Supported: staged falsification and reporting of declared robotic invariance claims under specified transformations, stages, metrics, thresholds, and observability regimes.
+
+Not supported: hardware safety certification, universal invariance proof, learned policy superiority in the real world, or policy improvement from the audit itself.

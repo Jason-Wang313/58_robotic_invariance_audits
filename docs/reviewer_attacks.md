@@ -1,16 +1,25 @@
 # Reviewer Attacks
 
-## Fatal if unaddressed
+## Attack: This is just robustness evaluation with a new name.
 
-- "This is just robustness evaluation with a new name."
-- "The original diagnostic compares different generated conditions, so it cannot prove that auditing improves a policy."
-- "Threshold choice drives the hidden-failure count."
-- "The audit is handcrafted and synthetic."
-- "No real robot, learned model, or benchmark suite is evaluated."
+Response: robustness reports outcome success. The audit requires declared transformation maps, named stages, gap metrics, thresholds, observability regimes, and false-pass accounting.
 
-## V2 response
+## Attack: The audit improves the policy.
 
-- Reframed the paper as an observer and reporting protocol, not a policy-improvement method.
-- Added a same-policy control on the aggregate-robustness trials.
-- Reported threshold sensitivity explicitly.
-- Marked the contribution workshop-only and removed submission-ready framing.
+Response: v3 validates the opposite. Observed success equals policy success for all 201,600 condition rows; max absolute success delta is 0.0.
+
+## Attack: Threshold choice drives the result.
+
+Response: the final benchmark reports thresholds 0.08, 0.10, 0.12, 0.16, and 0.20. Collapse rates change, but the need for staged observability remains.
+
+## Attack: The result is synthetic.
+
+Response: true and stated. The paper is a deterministic benchmark and reporting discipline, not hardware validation.
+
+## Attack: Encoder equivariance is already known.
+
+Response: the paper is not claiming encoder equivariance as new. It shows that encoder-stage invariance does not automatically imply memory, action, contact, or closed-loop invariance.
+
+## Attack: Full-stage logs are expensive.
+
+Response: the benchmark reports audit overhead and observability regimes. The claim is not that every deployment must log everything; it is that invariance claims should state what was observable.
