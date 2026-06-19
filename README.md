@@ -24,9 +24,10 @@ The paper now centers on a deterministic, RAM-light, observer-only benchmark for
 - Canonical PDF: `C:/Users/wangz/Downloads/58.pdf`
 - Pages: 25
 - Size: 360,580 bytes
-- SHA256: `3F4945B84202530A3EA82E1153C4EDBA464AACD011A919E849F094E8A683266A`
+- SHA256: `252A81EB1562B6CB5CEEA72801D9DD8126E63AEAE73ABA423E9F0A9B5EF204F8`
 - Local `paper/main.pdf`: removed after export
-- Visual QA: rendered canonical PDF to PNG and inspected representative pages 1, 5, 6, 7, 8, 9, 17, 21, 24, and 25
+- Visual QA: rendered canonical PDF to PNG and inspected highlighted pages 3, 4, 5, 6, 7, 8, 9, 10, 20, and 21
+- Visual hardening: VLA-v4-style boxed links, with green citation/URL borders and red internal-reference borders.
 
 ## Reproducible artifacts
 

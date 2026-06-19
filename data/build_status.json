@@ -4,11 +4,11 @@
     "canonical_pdf":  "C:\\Users\\wangz\\Downloads\\58.pdf",
     "pages":  25,
     "file_size_bytes":  360580,
-    "sha256":  "3F4945B84202530A3EA82E1153C4EDBA464AACD011A919E849F094E8A683266A",
+    "sha256":  "252A81EB1562B6CB5CEEA72801D9DD8126E63AEAE73ABA423E9F0A9B5EF204F8",
     "condition_rows":  201600,
     "represented_evaluations":  105696460800,
     "represented_planning_tick_decisions":  6764573491200,
     "audit_observer_only_ok":  true,
     "local_pdf_removed":  true,
-    "built_at":  "2026-06-18 21:56:56 +08:00"
+    "built_at":  "2026-06-19 21:34:19 +08:00"
 }
